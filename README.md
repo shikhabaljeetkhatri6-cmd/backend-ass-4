@@ -184,3 +184,35 @@ The server terminal logs events similar to:
 - Notes are filtered by the authenticated user's ID.
 - Socket.IO connections require a valid JWT.
 - This is a lab implementation; production systems should also add rate limiting, stricter input validation, HTTPS, and token revocation/refresh strategy.
+
+  ## postman - GET/api/notes
+  <img width="1470" height="949" alt="Screenshot 2026-11-21 at 7 17 56 PM" src="https://github.com/user-attachments/assets/23e17a8c-8eaf-4dd1-9bf4-fcb16418e7ce" />
+
+  ## postman - GET/api/notes
+  <img width="1464" height="944" alt="Screenshot 2026-11-21 at 7 38 17 PM" src="https://github.com/user-attachments/assets/bb7d0cd8-6b5a-4301-b6a9-b714480d1b55" />
+
+  ## postman - GET/auth/me
+  <img width="1470" height="956" alt="Screenshot 2026-11-21 at 8 18 02 PM" src="https://github.com/user-attachments/assets/ca213e6e-273a-485b-9a6e-8aa58664771b" />
+
+  ## postman - PUT/api/notes/:id
+<img width="1470" height="956" alt="Screenshot 2026-11-21 at 8 38 42 PM" src="https://github.com/user-attachments/assets/367ef1bd-5f20-4ff9-a562-bffcf73f1801" />
+
+## postman - POST/auth/login
+<img width="1470" height="914" alt="Screenshot 2026-11-21 at 7 16 34 PM" src="https://github.com/user-attachments/assets/06ecf1e0-12b9-4896-80ad-db2330c651b8" />
+
+## postman - POST/auth/signup
+<img width="1459" height="952" alt="Screenshot 2026-11-21 at 7 14 06 PM" src="https://github.com/user-attachments/assets/21aa19c6-8d90-451b-9998-4d13f20e0f5c" />
+
+## postman - POST/api/notes
+<img width="1470" height="933" alt="Screenshot 2026-11-21 at 7 34 54 PM" src="https://github.com/user-attachments/assets/a5fedc64-f9d7-4320-a7ac-90e6cfe8375d" />
+
+## postman - DELETE/api/notes/:id
+<img width="1470" height="956" alt="Screenshot 2026-11-21 at 8 41 46 PM" src="https://github.com/user-attachments/assets/0a0f5864-fd0d-42e5-a3fb-748ce71d67e0" />
+
+
+## Real-time chat 
+<img width="1470" height="956" alt="Screenshot 2026-11-21 at 7 59 52 PM" src="https://github.com/user-attachments/assets/c5d0f769-3626-41fc-8601-75f250c13b1a" />
+
+
+
+
