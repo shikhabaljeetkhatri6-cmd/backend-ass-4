@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Connect - Real Time Chat</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 760px;
+      margin: 40px auto;
+      padding: 0 16px;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input, button {
+      padding: 12px;
+      margin: 5px 0;
+      box-sizing: border-box;
+    }
+
+    input {
+      width: 100%;
+    }
+
+    button {
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #messages {
+      background: white;
+      border: 1px solid #ccc;
+      min-height: 220px;
+      padding: 15px;
+      list-style: none;
+    }
+
+    #messages li {
+      margin: 10px 0;
+      overflow-wrap: anywhere;
+    }
+
+    #status {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Secure Connect - Real-Time Chat</h1>
+
+  <p>Paste your JWT token below to connect.</p>
+
+  <label>JWT Token</label>
+  <input id="token" placeholder="Paste your login JWT token">
+
+  <label>Room</label>
+  <input id="room" value="general">
+
+  <button id="connect">Connect</button>
+
+  <p id="status">Not connected</p>
+
+  <h3>Messages</h3>
+  <ul id="messages"></ul>
+
+  <form id="chatForm">
+    <input
+      id="message"
+      placeholder="Type your message..."
+      autocomplete="off"
+      required
+    >
+    <button type="submit">Send</button>
+  </form>
+
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+    let socket;
+
+    const status = document.getElementById("status");
+    const messages = document.getElementById("messages");
+
+    function addMessage(text) {
+      const li = document.createElement("li");
+      li.textContent = text;
+      messages.appendChild(li);
+    }
+
+    document.getElementById("connect").addEventListener("click", () => {
+
+      const token = document.getElementById("token").value.trim();
+      const room = document.getElementById("room").value.trim() || "general";
+
+      if (!token) {
+        alert("Please paste your JWT token first.");
+        return;
+      }
+
+      if (socket) {
+        socket.disconnect();
+      }
+
+      socket = io({
+        auth: { token }
+      });
+
+      socket.on("connect", () => {
+        status.textContent = "Connected";
+        socket.emit("joinRoom", room);
+      });
+
+      socket.on("connect_error", (error) => {
+        status.textContent = "Connection failed: " + error.message;
+      });
+
+      socket.on("systemMessage", (message) => {
+        addMessage(message);
+      });
+
+      socket.on("chatMessage", (data) => {
+        addMessage(
+          `[${data.room}] ${data.username}: ${data.message}`
+        );
+      });
+
+      socket.on("disconnect", () => {
+        status.textContent = "Disconnected";
+      });
+
+    });
+
+    document.getElementById("chatForm").addEventListener("submit", (event) => {
+
+      event.preventDefault();
+
+      if (!socket || !socket.connected) {
+        alert("Please connect first.");
+        return;
+      }
+
+      const messageInput = document.getElementById("message");
+      const room = document.getElementById("room").value.trim() || "general";
+
+      socket.emit("chatMessage", {
+        room: room,
+        message: messageInput.value
+      });
+
+      messageInput.value = "";
+
+    });
+  </script>
+
+</body>
+</html>
